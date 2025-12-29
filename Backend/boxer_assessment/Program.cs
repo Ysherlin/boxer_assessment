@@ -31,6 +31,8 @@ namespace boxer_assessment
 
             var app = builder.Build();
 
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
