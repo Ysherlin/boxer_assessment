@@ -1,4 +1,8 @@
 using boxer_assessment.Data;
+using boxer_assessment.Repositories;
+using boxer_assessment.Repositories.Interfaces;
+using boxer_assessment.Services;
+using boxer_assessment.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace boxer_assessment
@@ -8,10 +12,6 @@ namespace boxer_assessment
     /// </summary>
     public class Program
     {
-        /// <summary>
-        /// Application main method.
-        /// </summary>
-        /// <param name="args">Startup arguments.</param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +21,9 @@ namespace boxer_assessment
             builder.Services.AddDbContext<EmployeeDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

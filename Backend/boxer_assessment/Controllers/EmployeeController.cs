@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using boxer_assessment.Data;
-using boxer_assessment.Domain.Entities;
 using boxer_assessment.Dtos;
+using boxer_assessment.Services.Interfaces;
 
 namespace boxer_assessment.Controllers
 {
@@ -13,60 +11,27 @@ namespace boxer_assessment.Controllers
     [Route("api/employees")]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeDbContext _context;
+        private readonly IEmployeeService _service;
 
         /// <summary>
         /// Creates a new employee controller.
         /// </summary>
-        /// <param name="context">Database context.</param>
-        public EmployeeController(EmployeeDbContext context)
+        /// <param name="service">Employee service.</param>
+        public EmployeeController(IEmployeeService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        /// <summary>
-        /// Gets all employees.
-        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeReadDto>>> GetAll()
         {
-            var employees = await _context.Employees
-                .Include(e => e.JobTitle)
-                .Select(e => new EmployeeReadDto
-                {
-                    EmployeeId = e.EmployeeId,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Email = e.Email,
-                    Salary = e.Salary,
-                    IsActive = e.IsActive,
-                    JobTitle = e.JobTitle.TitleName
-                })
-                .ToListAsync();
-
-            return Ok(employees);
+            return Ok(await _service.GetAllAsync());
         }
 
-        /// <summary>
-        /// Gets an employee by id.
-        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeReadDto>> GetById(int id)
         {
-            var employee = await _context.Employees
-                .Include(e => e.JobTitle)
-                .Where(e => e.EmployeeId == id)
-                .Select(e => new EmployeeReadDto
-                {
-                    EmployeeId = e.EmployeeId,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Email = e.Email,
-                    Salary = e.Salary,
-                    IsActive = e.IsActive,
-                    JobTitle = e.JobTitle.TitleName
-                })
-                .FirstOrDefaultAsync();
+            var employee = await _service.GetByIdAsync(id);
 
             if (employee == null)
             {
@@ -76,69 +41,36 @@ namespace boxer_assessment.Controllers
             return Ok(employee);
         }
 
-        /// <summary>
-        /// Creates a new employee.
-        /// </summary>
         [HttpPost]
         public async Task<ActionResult> Create(EmployeeCreateDto dto)
         {
-            var employee = new Employee
-            {
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email,
-                Salary = dto.Salary,
-                IsActive = dto.IsActive,
-                JobTitleId = dto.JobTitleId,
-                CreatedDate = DateTime.UtcNow
-            };
+            var id = await _service.CreateAsync(dto);
 
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetById), new { id = employee.EmployeeId }, null);
+            return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
-        /// <summary>
-        /// Updates an existing employee.
-        /// </summary>
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, EmployeeUpdateDto dto)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var updated = await _service.UpdateAsync(id, dto);
 
-            if (employee == null)
+            if (!updated)
             {
                 return NotFound();
             }
-
-            employee.FirstName = dto.FirstName;
-            employee.LastName = dto.LastName;
-            employee.Salary = dto.Salary;
-            employee.IsActive = dto.IsActive;
-            employee.JobTitleId = dto.JobTitleId;
-            employee.ModifiedDate = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        /// <summary>
-        /// Deletes an employee.
-        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var deleted = await _service.DeleteAsync(id);
 
-            if (employee == null)
+            if (!deleted)
             {
                 return NotFound();
             }
-
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
