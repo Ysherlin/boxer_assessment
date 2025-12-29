@@ -28,12 +28,61 @@ namespace boxer_assessment.Data
         public DbSet<JobTitle> JobTitles { get; set; }
 
         /// <summary>
-        /// Configures the entity model.
+        /// Configures entity mappings and constraints.
         /// </summary>
         /// <param name="modelBuilder">Model builder.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<JobTitle>(entity =>
+            {
+                entity.HasKey(e => e.JobTitleId);
+
+                entity.Property(e => e.TitleName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.HasIndex(e => e.TitleName)
+                      .IsUnique();
+            });
+
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.HasKey(e => e.EmployeeId);
+
+                entity.Property(e => e.FirstName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.LastName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.Email)
+                      .IsRequired()
+                      .HasMaxLength(255);
+
+                entity.HasIndex(e => e.Email)
+                      .IsUnique();
+
+                entity.Property(e => e.Salary)
+                      .IsRequired();
+
+                entity.Property(e => e.IsActive)
+                      .IsRequired();
+
+                entity.HasOne(e => e.JobTitle)
+                      .WithMany()
+                      .HasForeignKey(e => e.JobTitleId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.ToTable(table =>
+                {
+                    table.HasCheckConstraint(
+                        "CK_Employee_Salary",
+                        "Salary >= 0"
+                    );
+                });
+            });
         }
     }
 }
