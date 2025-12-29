@@ -82,7 +82,7 @@ VALUES
 GO
 
 /* =========================================================
-   Seed Data: Employee (10 Rows)
+   Seed Data: Employee (20 Rows)
    ========================================================= */
 
 INSERT INTO dbo.Employee
@@ -95,14 +95,24 @@ INSERT INTO dbo.Employee
     JobTitleId
 )
 VALUES
-('John',     'Doe',       'john.doe@company.com',       45000, 1, 1),
-('Jane',     'Smith',     'jane.smith@company.com',     55000, 1, 2),
-('Michael',  'Brown',     'michael.brown@company.com',  75000, 1, 3),
-('Sarah',    'Johnson',   'sarah.johnson@company.com',  52000, 1, 2),
-('David',    'Wilson',    'david.wilson@company.com',   48000, 0, 1),
-('Emma',     'Taylor',    'emma.taylor@company.com',    70000, 1, 3),
-('Chris',    'Anderson',  'chris.anderson@company.com', 46000, 1, 4),
-('Olivia',   'Thomas',    'olivia.thomas@company.com',  80000, 1, 5),
-('Daniel',   'Moore',     'daniel.moore@company.com',   60000, 0, 2),
-('Sophia',   'Jackson',   'sophia.jackson@company.com', 72000, 1, 3);
+('John',     'Doe',       'john.doe@company.com',        45000, 1, 1),
+('Jane',     'Smith',     'jane.smith@company.com',      55000, 1, 2),
+('Michael',  'Brown',     'michael.brown@company.com',   75000, 1, 3),
+('Sarah',    'Johnson',   'sarah.johnson@company.com',   52000, 1, 2),
+('David',    'Wilson',    'david.wilson@company.com',    48000, 0, 1),
+('Emma',     'Taylor',    'emma.taylor@company.com',     70000, 1, 3),
+('Chris',    'Anderson',  'chris.anderson@company.com',  46000, 1, 4),
+('Olivia',   'Thomas',    'olivia.thomas@company.com',   80000, 1, 5),
+('Daniel',   'Moore',     'daniel.moore@company.com',    60000, 0, 2),
+('Sophia',   'Jackson',   'sophia.jackson@company.com',  72000, 1, 3),
+('Ryan',     'Martins',   'ryan.martins@company.com',    47000, 1, 1),
+('Lauren',   'Naidoo',    'lauren.naidoo@company.com',  56000, 1, 2),
+('Kevin',    'Pillay',    'kevin.pillay@company.com',   78000, 1, 3),
+('Ayesha',   'Khan',      'ayesha.khan@company.com',    53000, 1, 2),
+('Mark',     'Roberts',   'mark.roberts@company.com',   49000, 0, 1),
+('Nadia',    'Patel',     'nadia.patel@company.com',    71000, 1, 3),
+('Luke',     'Stevens',   'luke.stevens@company.com',   46500, 1, 4),
+('Hannah',   'White',     'hannah.white@company.com',   82000, 1, 5),
+('Brandon',  'Lee',       'brandon.lee@company.com',    61000, 0, 2),
+('Priya',    'Singh',     'priya.singh@company.com',    74000, 1, 3);
 GO
