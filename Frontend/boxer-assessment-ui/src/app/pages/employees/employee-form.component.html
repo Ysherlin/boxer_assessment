@@ -1,0 +1,102 @@
+<section class="employee-form">
+  <h1>{{ isEditMode ? 'Edit Employee' : 'Create Employee' }}</h1>
+
+  <form #form="ngForm" (ngSubmit)="save(form)" novalidate>
+    <div class="form-row">
+      <label>First Name</label>
+      <input
+        type="text"
+        name="firstName"
+        required
+        maxlength="100"
+        [(ngModel)]="model.firstName"
+        #firstName="ngModel"
+      />
+      <div class="error" *ngIf="firstName.invalid && firstName.touched">
+        First name is required.
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Last Name</label>
+      <input
+        type="text"
+        name="lastName"
+        required
+        maxlength="100"
+        [(ngModel)]="model.lastName"
+        #lastName="ngModel"
+      />
+      <div class="error" *ngIf="lastName.invalid && lastName.touched">
+        Last name is required.
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        required
+        [readonly]="isEditMode"
+        [(ngModel)]="model.email"
+        #email="ngModel"
+      />
+      <div class="error" *ngIf="email.invalid && email.touched">
+        Valid email is required.
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Salary</label>
+      <input
+        type="number"
+        name="salary"
+        required
+        min="0"
+        step="0.01"
+        [(ngModel)]="model.salary"
+        #salary="ngModel"
+      />
+      <div class="error" *ngIf="salary.invalid && salary.touched">
+        Salary must be a positive number.
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Job Title</label>
+      <select
+        name="jobTitleId"
+        required
+        [(ngModel)]="model.jobTitleId"
+        #jobTitleId="ngModel"
+      >
+        <option [ngValue]="null">Select job title</option>
+        <option
+          *ngFor="let jt of jobTitles"
+          [ngValue]="jt.jobTitleId"
+        >
+          {{ jt.titleName }}
+        </option>
+      </select>
+      <div class="error" *ngIf="jobTitleId.invalid && jobTitleId.touched">
+        Job title is required.
+      </div>
+    </div>
+
+    <div class="form-row checkbox">
+      <label>
+        <input
+          type="checkbox"
+          name="isActive"
+          [(ngModel)]="model.isActive"
+        />
+        Active
+      </label>
+    </div>
+
+    <button class="primary-btn" type="submit">
+      {{ isEditMode ? 'Update Employee' : 'Create Employee' }}
+    </button>
+  </form>
+</section>

@@ -1,0 +1,62 @@
+.employee-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.employee-form h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.form-row label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.form-row input,
+.form-row select {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.form-row input[readonly] {
+  background: #f5f5f5;
+}
+
+.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.error {
+  color: #b00020;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  background: linear-gradient(
+    90deg,
+    #f0060b 0%,
+    #cc26d5 50%,
+    #7702ff 100%
+  );
+  color: white;
+}

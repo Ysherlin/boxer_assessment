@@ -1,0 +1,35 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    90deg,
+    #f0060b 0%,
+    #cc26d5 50%,
+    #7702ff 100%
+  );
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.navbar-links a {
+  margin-left: 1.5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.navbar-links a:hover {
+  opacity: 1;
+}
+
+.navbar-links a.active {
+  text-decoration: underline;
+  opacity: 1;
+}

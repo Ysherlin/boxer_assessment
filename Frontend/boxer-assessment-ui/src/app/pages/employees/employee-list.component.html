@@ -1,0 +1,66 @@
+<section class="employee-list">
+  <div class="header">
+    <h1>Employees</h1>
+    <button class="primary-btn" (click)="createEmployee()">
+      + Add Employee
+    </button>
+  </div>
+
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search employees..."
+    [(ngModel)]="search"
+    (ngModelChange)="onSearchChange()"
+  />
+
+  <table>
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Job Title</th>
+        <th>Salary</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.jobTitle }}</td>
+        <td>{{ employee.salary | currency }}</td>
+        <td>
+          {{ employee.isActive ? 'Active' : 'Inactive' }}
+        </td>
+        <td class="actions">
+          <button (click)="editEmployee(employee.employeeId)">Edit</button>
+          <button class="danger" (click)="deleteEmployee(employee.employeeId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="pageNumber === 1">
+      Previous
+    </button>
+
+    <span>
+      Page {{ pageNumber }} of {{ totalPages }}
+    </span>
+
+    <button
+      (click)="nextPage()"
+      [disabled]="pageNumber === totalPages"
+    >
+      Next
+    </button>
+  </div>
+</section>
