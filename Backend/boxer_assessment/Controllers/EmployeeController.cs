@@ -22,12 +22,22 @@ namespace boxer_assessment.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Gets a paged list of employees with optional search.
+        /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeReadDto>>> GetAll()
+        public async Task<ActionResult<PagedResultDto<EmployeeReadDto>>> GetAll(
+            [FromQuery] string? search,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
         {
-            return Ok(await _service.GetAllAsync());
+            var result = await _service.GetAllAsync(search, pageNumber, pageSize);
+            return Ok(result);
         }
 
+        /// <summary>
+        /// Gets an employee by id.
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeReadDto>> GetById(int id)
         {
@@ -41,14 +51,19 @@ namespace boxer_assessment.Controllers
             return Ok(employee);
         }
 
+        /// <summary>
+        /// Creates a new employee.
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult> Create(EmployeeCreateDto dto)
         {
             var id = await _service.CreateAsync(dto);
-
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
+        /// <summary>
+        /// Updates an existing employee.
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, EmployeeUpdateDto dto)
         {
@@ -62,6 +77,9 @@ namespace boxer_assessment.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes an employee.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

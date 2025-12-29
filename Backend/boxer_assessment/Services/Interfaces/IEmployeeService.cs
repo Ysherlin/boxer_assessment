@@ -7,7 +7,10 @@ namespace boxer_assessment.Services.Interfaces
     /// </summary>
     public interface IEmployeeService
     {
-        Task<List<EmployeeReadDto>> GetAllAsync();
+        Task<PagedResultDto<EmployeeReadDto>> GetAllAsync(
+            string? search,
+            int pageNumber,
+            int pageSize);
 
         Task<EmployeeReadDto?> GetByIdAsync(int id);
 

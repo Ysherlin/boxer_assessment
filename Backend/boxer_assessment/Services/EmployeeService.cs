@@ -1,4 +1,4 @@
-﻿using boxer_assessment.Domain.Entities;
+using boxer_assessment.Domain.Entities;
 using boxer_assessment.Dtos;
 using boxer_assessment.Repositories.Interfaces;
 using boxer_assessment.Services.Interfaces;
@@ -12,29 +12,54 @@ namespace boxer_assessment.Services
     {
         private readonly IEmployeeRepository _repository;
 
-        /// <summary>
-        /// Creates a new service instance.
-        /// </summary>
-        /// <param name="repository">Employee repository.</param>
         public EmployeeService(IEmployeeRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<List<EmployeeReadDto>> GetAllAsync()
+        public async Task<PagedResultDto<EmployeeReadDto>> GetAllAsync(
+            string? search,
+            int pageNumber,
+            int pageSize)
         {
             var employees = await _repository.GetAllAsync();
 
-            return employees.Select(e => new EmployeeReadDto
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                EmployeeId = e.EmployeeId,
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                Email = e.Email,
-                Salary = e.Salary,
-                IsActive = e.IsActive,
-                JobTitle = e.JobTitle.TitleName
-            }).ToList();
+                var term = search.ToLower();
+
+                employees = employees
+                    .Where(e =>
+                        e.FirstName.ToLower().Contains(term) ||
+                        e.LastName.ToLower().Contains(term) ||
+                        e.Email.ToLower().Contains(term))
+                    .ToList();
+            }
+
+            var totalCount = employees.Count;
+
+            var pagedItems = employees
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(e => new EmployeeReadDto
+                {
+                    EmployeeId = e.EmployeeId,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    Email = e.Email,
+                    Salary = e.Salary,
+                    IsActive = e.IsActive,
+                    JobTitle = e.JobTitle.TitleName
+                })
+                .ToList();
+
+            return new PagedResultDto<EmployeeReadDto>
+            {
+                Items = pagedItems,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<EmployeeReadDto?> GetByIdAsync(int id)
@@ -60,7 +85,7 @@ namespace boxer_assessment.Services
 
         public async Task<int> CreateAsync(EmployeeCreateDto dto)
         {
-            var employee = new Employee
+            var employee = new Domain.Entities.Employee
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
@@ -72,7 +97,6 @@ namespace boxer_assessment.Services
             };
 
             await _repository.AddAsync(employee);
-
             return employee.EmployeeId;
         }
 
@@ -93,7 +117,6 @@ namespace boxer_assessment.Services
             employee.ModifiedDate = DateTime.UtcNow;
 
             await _repository.UpdateAsync(employee);
-
             return true;
         }
 
@@ -107,7 +130,6 @@ namespace boxer_assessment.Services
             }
 
             await _repository.DeleteAsync(employee);
-
             return true;
         }
     }
