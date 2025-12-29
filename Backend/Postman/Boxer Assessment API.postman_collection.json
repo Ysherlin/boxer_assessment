@@ -1,145 +1,149 @@
 {
-	"info": {
-		"_postman_id": "e512d6f8-9ca6-4de9-8138-505562f56c5f",
-		"name": "Boxer Assessment API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "49734679",
-		"_collection_link": "https://ysherlin-govender-2404232.postman.co/workspace/Ysherlin-Govender's-Workspace~dbb45218-f118-4b8b-880e-009977469dcd/collection/49734679-e512d6f8-9ca6-4de9-8138-505562f56c5f?action=share&source=collection_link&creator=49734679"
-	},
-	"item": [
-		{
-			"name": "Get All Employees",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "X-API-KEY",
-						"value": "{{apiKey}}"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/api/employees",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"employees"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Employee By Id",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "X-API-KEY",
-						"value": "{{apiKey}}"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/api/employees/1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"employees",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Employee",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "X-API-KEY",
-						"value": "{{apiKey}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"firstName\": \"Ysherlin\",\n  \"lastName\": \"Govender\",\n  \"email\": \"Ysherlin.Govender@company.com\",\n  \"salary\": 50000,\n  \"isActive\": true,\n  \"jobTitleId\": 2\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/employees",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"employees"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Employee",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "X-API-KEY",
-						"value": "{{apiKey}}"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"firstName\": \"Serisha\",\n  \"lastName\": \"Naicker\",\n  \"salary\": 60000,\n  \"isActive\": false,\n  \"jobTitleId\": 3\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/employees/11",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"employees",
-						"11"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Employee",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "X-API-KEY",
-						"value": "{{apiKey}}"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/api/employees/11",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"employees",
-						"11"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "e512d6f8-9ca6-4de9-8138-505562f56c5f",
+    "name": "Boxer Assessment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Employees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-KEY",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees?pageNumber=1&pageSize=10",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "query": [
+            { "key": "pageNumber", "value": "1" },
+            { "key": "pageSize", "value": "10" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Employee By Id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-KEY",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "{{employeeId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Employee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-KEY",
+            "value": "{{apiKey}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Ysherlin\",\n  \"lastName\": \"Govender\",\n  \"email\": \"ysherlin.govender@company.com\",\n  \"salary\": 50000,\n  \"isActive\": true,\n  \"jobTitleId\": 2\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/employees",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Employee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "X-API-KEY",
+            "value": "{{apiKey}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Serisha\",\n  \"lastName\": \"Naicker\",\n  \"salary\": 60000,\n  \"isActive\": false,\n  \"jobTitleId\": 3\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "{{employeeId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Employee",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-API-KEY",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "{{employeeId}}"
+          ]
+        }
+      }
+    }
+  ]
 }
