@@ -23,7 +23,7 @@ namespace boxer_assessment.Tests.Services
         }
 
         [Test]
-        public async Task GetAllAsync_ReturnsEmployees()
+        public async Task GetAllAsync_ReturnsPagedEmployees()
         {
             // Arrange
             var employees = new List<Employee>
@@ -37,6 +37,16 @@ namespace boxer_assessment.Tests.Services
                     Salary = 50000,
                     IsActive = true,
                     JobTitle = new JobTitle { TitleName = "Developer" }
+                },
+                new Employee
+                {
+                    EmployeeId = 2,
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    Email = "jane@company.com",
+                    Salary = 60000,
+                    IsActive = true,
+                    JobTitle = new JobTitle { TitleName = "Manager" }
                 }
             };
 
@@ -45,13 +55,84 @@ namespace boxer_assessment.Tests.Services
                 .ReturnsAsync(employees);
 
             // Act
-            var result = await _service.GetAllAsync();
+            var result = await _service.GetAllAsync(
+                search: null,
+                pageNumber: 1,
+                pageSize: 10);
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result[0].FirstName, Is.EqualTo("John"));
-            Assert.That(result[0].JobTitle, Is.EqualTo("Developer"));
+            Assert.That(result.Items.Count, Is.EqualTo(2));
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Items[0].FirstName, Is.EqualTo("John"));
+        }
+
+        [Test]
+        public async Task GetAllAsync_WithSearch_ReturnsFilteredEmployees()
+        {
+            // Arrange
+            var employees = new List<Employee>
+            {
+                new Employee
+                {
+                    EmployeeId = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Email = "john@company.com",
+                    IsActive = true,
+                    JobTitle = new JobTitle { TitleName = "Developer" }
+                },
+                new Employee
+                {
+                    EmployeeId = 2,
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    Email = "jane@company.com",
+                    IsActive = true,
+                    JobTitle = new JobTitle { TitleName = "Manager" }
+                }
+            };
+
+            _repositoryMock
+                .Setup(r => r.GetAllAsync())
+                .ReturnsAsync(employees);
+
+            // Act
+            var result = await _service.GetAllAsync(
+                search: "john",
+                pageNumber: 1,
+                pageSize: 10);
+
+            // Assert
+            Assert.That(result.Items.Count, Is.EqualTo(1));
+            Assert.That(result.Items[0].FirstName, Is.EqualTo("John"));
+        }
+
+        [Test]
+        public async Task GetAllAsync_WithPagination_ReturnsCorrectPage()
+        {
+            // Arrange
+            var employees = new List<Employee>
+            {
+                new Employee { EmployeeId = 1, FirstName = "A", Email = "a@test.com", JobTitle = new JobTitle { TitleName = "Dev" } },
+                new Employee { EmployeeId = 2, FirstName = "B", Email = "b@test.com", JobTitle = new JobTitle { TitleName = "Dev" } },
+                new Employee { EmployeeId = 3, FirstName = "C", Email = "c@test.com", JobTitle = new JobTitle { TitleName = "Dev" } }
+            };
+
+            _repositoryMock
+                .Setup(r => r.GetAllAsync())
+                .ReturnsAsync(employees);
+
+            // Act
+            var result = await _service.GetAllAsync(
+                search: null,
+                pageNumber: 2,
+                pageSize: 1);
+
+            // Assert
+            Assert.That(result.Items.Count, Is.EqualTo(1));
+            Assert.That(result.Items[0].FirstName, Is.EqualTo("B"));
+            Assert.That(result.TotalCount, Is.EqualTo(3));
         }
 
         [Test]
@@ -64,7 +145,6 @@ namespace boxer_assessment.Tests.Services
                 FirstName = "Jane",
                 LastName = "Smith",
                 Email = "jane@company.com",
-                Salary = 60000,
                 IsActive = true,
                 JobTitle = new JobTitle { TitleName = "Manager" }
             };
