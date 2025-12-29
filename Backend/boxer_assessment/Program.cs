@@ -1,4 +1,5 @@
 using boxer_assessment.Data;
+using boxer_assessment.Middleware;
 using boxer_assessment.Repositories;
 using boxer_assessment.Repositories.Interfaces;
 using boxer_assessment.Services;
@@ -37,6 +38,8 @@ namespace boxer_assessment
             }
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<ApiKeyMiddleware>();
 
             app.UseAuthorization();
 
