@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36804.6 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "boxer_assessment", "boxer_assessment.csproj", "{0B83F6B8-0312-46B5-933E-3C89A75C3FA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "boxer_assessment.Tests", "..\boxer_assessment.Tests\boxer_assessment.Tests.csproj", "{33C52D28-C635-4D89-B336-AB229A8DDE33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0B83F6B8-0312-46B5-933E-3C89A75C3FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B83F6B8-0312-46B5-933E-3C89A75C3FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B83F6B8-0312-46B5-933E-3C89A75C3FA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33C52D28-C635-4D89-B336-AB229A8DDE33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C52D28-C635-4D89-B336-AB229A8DDE33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C52D28-C635-4D89-B336-AB229A8DDE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C52D28-C635-4D89-B336-AB229A8DDE33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
