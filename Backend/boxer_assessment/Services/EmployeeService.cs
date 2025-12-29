@@ -5,18 +5,24 @@ using boxer_assessment.Services.Interfaces;
 
 namespace boxer_assessment.Services
 {
-    /// <summary>
-    /// Employee service implementation.
-    /// </summary>
+    /// <inheritdoc />
     public class EmployeeService : IEmployeeService
     {
+        /// <summary>
+        /// Employee repository instance.
+        /// </summary>
         private readonly IEmployeeRepository _repository;
 
+        /// <summary>
+        /// Creates a new employee service.
+        /// </summary>
+        /// <param name="repository">Employee repository.</param>
         public EmployeeService(IEmployeeRepository repository)
         {
             _repository = repository;
         }
 
+        /// <inheritdoc />
         public async Task<PagedResultDto<EmployeeReadDto>> GetAllAsync(
             string? search,
             int pageNumber,
@@ -62,6 +68,7 @@ namespace boxer_assessment.Services
             };
         }
 
+        /// <inheritdoc />
         public async Task<EmployeeReadDto?> GetByIdAsync(int id)
         {
             var employee = await _repository.GetByIdAsync(id);
@@ -83,9 +90,10 @@ namespace boxer_assessment.Services
             };
         }
 
+        /// <inheritdoc />
         public async Task<int> CreateAsync(EmployeeCreateDto dto)
         {
-            var employee = new Domain.Entities.Employee
+            var employee = new Employee
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
@@ -100,6 +108,7 @@ namespace boxer_assessment.Services
             return employee.EmployeeId;
         }
 
+        /// <inheritdoc />
         public async Task<bool> UpdateAsync(int id, EmployeeUpdateDto dto)
         {
             var employee = await _repository.GetByIdAsync(id);
@@ -120,6 +129,7 @@ namespace boxer_assessment.Services
             return true;
         }
 
+        /// <inheritdoc />
         public async Task<bool> DeleteAsync(int id)
         {
             var employee = await _repository.GetByIdAsync(id);

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using boxer_assessment.Dtos;
 using boxer_assessment.Services.Interfaces;
 
@@ -11,6 +11,9 @@ namespace boxer_assessment.Controllers
     [Route("api/employees")]
     public class EmployeeController : ControllerBase
     {
+        /// <summary>
+        /// Employee service instance.
+        /// </summary>
         private readonly IEmployeeService _service;
 
         /// <summary>
@@ -25,11 +28,12 @@ namespace boxer_assessment.Controllers
         /// <summary>
         /// Gets a paged list of employees with optional search.
         /// </summary>
+        /// <param name="search">Search term.</param>
+        /// <param name="pageNumber">Page number.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <returns>Paged list of employees.</returns>
         [HttpGet]
-        public async Task<ActionResult<PagedResultDto<EmployeeReadDto>>> GetAll(
-            [FromQuery] string? search,
-            [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<PagedResultDto<EmployeeReadDto>>> GetAll([FromQuery] string? search, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var result = await _service.GetAllAsync(search, pageNumber, pageSize);
             return Ok(result);
@@ -38,6 +42,8 @@ namespace boxer_assessment.Controllers
         /// <summary>
         /// Gets an employee by id.
         /// </summary>
+        /// <param name="id">Employee identifier.</param>
+        /// <returns>Employee data.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeReadDto>> GetById(int id)
         {
@@ -54,6 +60,8 @@ namespace boxer_assessment.Controllers
         /// <summary>
         /// Creates a new employee.
         /// </summary>
+        /// <param name="dto">Employee creation data.</param>
+        /// <returns>Created employee location.</returns>
         [HttpPost]
         public async Task<ActionResult> Create(EmployeeCreateDto dto)
         {
@@ -64,6 +72,9 @@ namespace boxer_assessment.Controllers
         /// <summary>
         /// Updates an existing employee.
         /// </summary>
+        /// <param name="id">Employee identifier.</param>
+        /// <param name="dto">Employee update data.</param>
+        /// <returns>No content if successful.</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, EmployeeUpdateDto dto)
         {
@@ -80,6 +91,8 @@ namespace boxer_assessment.Controllers
         /// <summary>
         /// Deletes an employee.
         /// </summary>
+        /// <param name="id">Employee identifier.</param>
+        /// <returns>No content if successful.</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

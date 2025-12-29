@@ -4,14 +4,17 @@ using System.Text.Json;
 namespace boxer_assessment.Middleware
 {
     /// <summary>
-    /// Middleware for handling unhandled exceptions globally.
+    /// Middleware for handling unhandled exceptions.
     /// </summary>
     public class GlobalExceptionMiddleware
     {
+        /// <summary>
+        /// Next middleware in the pipeline.
+        /// </summary>
         private readonly RequestDelegate _next;
 
         /// <summary>
-        /// Creates a new middleware instance.
+        /// Creates a new exception middleware instance.
         /// </summary>
         /// <param name="next">Next middleware.</param>
         public GlobalExceptionMiddleware(RequestDelegate next)
@@ -20,7 +23,7 @@ namespace boxer_assessment.Middleware
         }
 
         /// <summary>
-        /// Invokes the middleware.
+        /// Executes the middleware.
         /// </summary>
         /// <param name="context">HTTP context.</param>
         public async Task InvokeAsync(HttpContext context)

@@ -1,7 +1,7 @@
 ﻿namespace boxer_assessment.Domain.Entities
 {
     /// <summary>
-    /// Represents a job title.
+    /// Represents a job title entity.
     /// </summary>
     public class JobTitle
     {

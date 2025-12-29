@@ -1,7 +1,7 @@
 ﻿namespace boxer_assessment.Domain.Entities
 {
     /// <summary>
-    /// Represents an employee.
+    /// Represents an employee entity.
     /// </summary>
     public class Employee
     {
@@ -31,12 +31,12 @@
         public decimal Salary { get; set; }
 
         /// <summary>
-        /// Indicates if the employee is active.
+        /// Indicates whether the employee is active.
         /// </summary>
         public bool IsActive { get; set; }
 
         /// <summary>
-        /// Foreign key to job title.
+        /// Foreign key for the job title.
         /// </summary>
         public int JobTitleId { get; set; }
 

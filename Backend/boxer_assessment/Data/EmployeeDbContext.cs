@@ -4,12 +4,12 @@ using boxer_assessment.Domain.Entities;
 namespace boxer_assessment.Data
 {
     /// <summary>
-    /// Entity Framework database context.
+    /// Database context for the application.
     /// </summary>
     public class EmployeeDbContext : DbContext
     {
         /// <summary>
-        /// Creates a new database context instance.
+        /// Initializes a new database context.
         /// </summary>
         /// <param name="options">Database context options.</param>
         public EmployeeDbContext(DbContextOptions<EmployeeDbContext> options)
@@ -20,12 +20,12 @@ namespace boxer_assessment.Data
         /// <summary>
         /// Employees table.
         /// </summary>
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; } = null!;
 
         /// <summary>
         /// Job titles table.
         /// </summary>
-        public DbSet<JobTitle> JobTitles { get; set; }
+        public DbSet<JobTitle> JobTitles { get; set; } = null!;
 
         /// <summary>
         /// Configures entity mappings and constraints.
@@ -33,6 +33,8 @@ namespace boxer_assessment.Data
         /// <param name="modelBuilder">Model builder.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<JobTitle>(entity =>
             {
                 entity.ToTable("JobTitle");

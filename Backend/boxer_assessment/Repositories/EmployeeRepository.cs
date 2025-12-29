@@ -5,11 +5,12 @@ using boxer_assessment.Repositories.Interfaces;
 
 namespace boxer_assessment.Repositories
 {
-    /// <summary>
-    /// Employee repository implementation.
-    /// </summary>
+    /// <inheritdoc />
     public class EmployeeRepository : IEmployeeRepository
     {
+        /// <summary>
+        /// Database context instance.
+        /// </summary>
         private readonly EmployeeDbContext _context;
 
         /// <summary>
@@ -21,6 +22,7 @@ namespace boxer_assessment.Repositories
             _context = context;
         }
 
+        /// <inheritdoc />
         public async Task<List<Employee>> GetAllAsync()
         {
             return await _context.Employees
@@ -28,6 +30,7 @@ namespace boxer_assessment.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<Employee?> GetByIdAsync(int id)
         {
             return await _context.Employees
@@ -35,18 +38,21 @@ namespace boxer_assessment.Repositories
                 .FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
+        /// <inheritdoc />
         public async Task AddAsync(Employee employee)
         {
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc />
         public async Task UpdateAsync(Employee employee)
         {
             _context.Employees.Update(employee);
             await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc />
         public async Task DeleteAsync(Employee employee)
         {
             _context.Employees.Remove(employee);

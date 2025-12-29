@@ -3,16 +3,27 @@
 namespace boxer_assessment.Middleware
 {
     /// <summary>
-    /// Middleware for simple API key authentication.
+    /// Middleware for API key authentication.
     /// </summary>
     public class ApiKeyMiddleware
     {
+        /// <summary>
+        /// HTTP header name for the API key.
+        /// </summary>
         private const string ApiKeyHeaderName = "X-API-KEY";
+
+        /// <summary>
+        /// Next middleware in the pipeline.
+        /// </summary>
         private readonly RequestDelegate _next;
+
+        /// <summary>
+        /// Configured API key value.
+        /// </summary>
         private readonly string _apiKey;
 
         /// <summary>
-        /// Creates a new middleware instance.
+        /// Creates a new API key middleware instance.
         /// </summary>
         /// <param name="next">Next middleware.</param>
         /// <param name="configuration">Application configuration.</param>
@@ -23,7 +34,7 @@ namespace boxer_assessment.Middleware
         }
 
         /// <summary>
-        /// Invokes the middleware.
+        /// Processes the HTTP request.
         /// </summary>
         /// <param name="context">HTTP context.</param>
         public async Task InvokeAsync(HttpContext context)
