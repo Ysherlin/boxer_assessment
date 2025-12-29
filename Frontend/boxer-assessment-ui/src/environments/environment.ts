@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3583/api',
+  apiBaseUrl: 'https://localhost:44394/api',
   apiKey: 'BOXER_ASSESSMENT_SECRET_TOKEN'
 };

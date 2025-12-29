@@ -39,6 +39,12 @@ namespace boxer_assessment.Middleware
         /// <param name="context">HTTP context.</param>
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context.Request.Method == HttpMethods.Options)
+            {
+                await _next(context);
+                return;
+            }
+
             if (!context.Request.Headers.TryGetValue(ApiKeyHeaderName, out var providedKey) ||
                 providedKey != _apiKey)
             {
