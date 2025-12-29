@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using boxer_assessment.Domain.Entities;
+﻿using boxer_assessment.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace boxer_assessment.Data
 {

@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using boxer_assessment.Dtos;
 using boxer_assessment.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace boxer_assessment.Controllers
 {

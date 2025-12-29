@@ -4,7 +4,6 @@ using boxer_assessment.Repositories.Interfaces;
 using boxer_assessment.Services;
 using boxer_assessment.Services.Interfaces;
 using Moq;
-using NUnit.Framework;
 
 namespace boxer_assessment.Tests.Services
 {
