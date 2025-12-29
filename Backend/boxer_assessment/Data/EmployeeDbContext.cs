@@ -35,6 +35,8 @@ namespace boxer_assessment.Data
         {
             modelBuilder.Entity<JobTitle>(entity =>
             {
+                entity.ToTable("JobTitle");
+
                 entity.HasKey(e => e.JobTitleId);
 
                 entity.Property(e => e.TitleName)
@@ -47,6 +49,8 @@ namespace boxer_assessment.Data
 
             modelBuilder.Entity<Employee>(entity =>
             {
+                entity.ToTable("Employee");
+
                 entity.HasKey(e => e.EmployeeId);
 
                 entity.Property(e => e.FirstName)
