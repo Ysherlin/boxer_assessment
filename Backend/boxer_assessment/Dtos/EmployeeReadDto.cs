@@ -36,6 +36,11 @@
         public bool IsActive { get; set; }
 
         /// <summary>
+        /// Job title identifier.
+        /// </summary>
+        public int JobTitleId { get; set; }
+
+        /// <summary>
         /// Job title name.
         /// </summary>
         public string JobTitle { get; set; } = null!;

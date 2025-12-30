@@ -34,30 +34,40 @@ export class EmployeeFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadJobTitles();
-
     const idParam = this.route.snapshot.paramMap.get('id');
+
     if (idParam) {
       this.isEditMode = true;
       this.employeeId = Number(idParam);
-      this.loadEmployee(this.employeeId);
     }
-  }
 
-  loadJobTitles(): void {
-    this.jobTitleService.getJobTitles().subscribe(data => {
-      this.jobTitles = data;
+    this.jobTitleService.getJobTitles().subscribe({
+      next: (titles) => {
+        this.jobTitles = titles;
+
+        if (this.isEditMode && this.employeeId) {
+          this.loadEmployee(this.employeeId);
+        }
+      },
+      error: () => {
+        alert('Failed to load job titles');
+      }
     });
   }
 
   loadEmployee(id: number): void {
-    this.employeeService.getEmployeeById(id).subscribe(employee => {
-      this.model.firstName = employee.firstName;
-      this.model.lastName = employee.lastName;
-      this.model.email = employee.email;
-      this.model.salary = employee.salary;
-      this.model.isActive = employee.isActive;
-      this.model.jobTitleId = employee.jobTitleId;
+    this.employeeService.getEmployeeById(id).subscribe({
+      next: (employee) => {
+        this.model.firstName = employee.firstName;
+        this.model.lastName = employee.lastName;
+        this.model.email = employee.email;
+        this.model.salary = employee.salary;
+        this.model.isActive = employee.isActive;
+        this.model.jobTitleId = employee.jobTitleId;
+      },
+      error: () => {
+        alert('Failed to load employee');
+      }
     });
   }
 

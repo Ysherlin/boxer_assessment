@@ -55,6 +55,7 @@ namespace boxer_assessment.Services
                     Email = e.Email,
                     Salary = e.Salary,
                     IsActive = e.IsActive,
+                    JobTitleId = e.JobTitleId,
                     JobTitle = e.JobTitle.TitleName
                 })
                 .ToList();
@@ -86,6 +87,7 @@ namespace boxer_assessment.Services
                 Email = employee.Email,
                 Salary = employee.Salary,
                 IsActive = employee.IsActive,
+                JobTitleId = employee.JobTitleId,
                 JobTitle = employee.JobTitle.TitleName
             };
         }
