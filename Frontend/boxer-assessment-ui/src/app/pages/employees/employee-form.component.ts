@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -30,7 +30,8 @@ export class EmployeeFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
-    private jobTitleService: JobTitleService
+    private jobTitleService: JobTitleService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -58,12 +59,16 @@ export class EmployeeFormComponent implements OnInit {
   loadEmployee(id: number): void {
     this.employeeService.getEmployeeById(id).subscribe({
       next: (employee) => {
-        this.model.firstName = employee.firstName;
-        this.model.lastName = employee.lastName;
-        this.model.email = employee.email;
-        this.model.salary = employee.salary;
-        this.model.isActive = employee.isActive;
-        this.model.jobTitleId = employee.jobTitleId;
+        this.model = {
+          firstName: employee.firstName,
+          lastName: employee.lastName,
+          email: employee.email,
+          salary: employee.salary,
+          isActive: employee.isActive,
+          jobTitleId: employee.jobTitleId
+        };
+
+        this.cdr.detectChanges();
       },
       error: () => {
         alert('Failed to load employee');
