@@ -29,6 +29,8 @@ namespace boxer_assessment
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IJobTitleRepository, JobTitleRepository>();
+            builder.Services.AddScoped<IJobTitleService, JobTitleService>();
 
             builder.Services.AddCors(options =>
             {

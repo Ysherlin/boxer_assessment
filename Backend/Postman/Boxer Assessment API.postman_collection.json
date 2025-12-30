@@ -6,144 +6,124 @@
   },
   "item": [
     {
-      "name": "Get All Employees",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "X-API-KEY",
-            "value": "{{apiKey}}",
-            "type": "text"
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Get All Employees",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees?pageNumber=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees"],
+              "query": [
+                { "key": "pageNumber", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
           }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/employees?pageNumber=1&pageSize=10",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "employees"
-          ],
-          "query": [
-            { "key": "pageNumber", "value": "1" },
-            { "key": "pageSize", "value": "10" }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Get Employee By Id",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "X-API-KEY",
-            "value": "{{apiKey}}",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "employees",
-            "{{employeeId}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Create Employee",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "X-API-KEY",
-            "value": "{{apiKey}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Ysherlin\",\n  \"lastName\": \"Govender\",\n  \"email\": \"ysherlin.govender@company.com\",\n  \"salary\": 50000,\n  \"isActive\": true,\n  \"jobTitleId\": 2\n}"
         },
-        "url": {
-          "raw": "{{baseUrl}}/api/employees",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "employees"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Update Employee",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "X-API-KEY",
-            "value": "{{apiKey}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
+        {
+          "name": "Get Employee By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "{{employeeId}}"]
+            }
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Serisha\",\n  \"lastName\": \"Naicker\",\n  \"salary\": 60000,\n  \"isActive\": false,\n  \"jobTitleId\": 3\n}"
         },
-        "url": {
-          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "employees",
-            "{{employeeId}}"
-          ]
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "X-API-KEY", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"salary\": 50000,\n  \"isActive\": true,\n  \"jobTitleId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees"]
+            }
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "X-API-KEY", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"salary\": 60000,\n  \"isActive\": false,\n  \"jobTitleId\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "{{employeeId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "{{employeeId}}"]
+            }
+          }
         }
-      }
+      ]
     },
     {
-      "name": "Delete Employee",
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "X-API-KEY",
-            "value": "{{apiKey}}",
-            "type": "text"
+      "name": "Job Titles",
+      "item": [
+        {
+          "name": "Get Job Titles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{apiKey}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobtitles",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobtitles"]
+            }
           }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "employees",
-            "{{employeeId}}"
-          ]
         }
-      }
+      ]
     }
   ]
 }
