@@ -38,7 +38,9 @@
         <td>{{ employee.lastName }}</td>
         <td>{{ employee.email }}</td>
         <td>{{ employee.jobTitle }}</td>
-        <td>{{ employee.salary | currency }}</td>
+        <td>
+          {{ employee.salary | currency:'R':'symbol':'1.0-0' }}
+        </td>
         <td>{{ employee.isActive ? 'Active' : 'Inactive' }}</td>
         <td class="actions">
           <button (click)="editEmployee(employee.employeeId)">Edit</button>
