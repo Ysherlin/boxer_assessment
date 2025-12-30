@@ -1,4 +1,5 @@
 <section class="employee-list">
+
   <div class="header">
     <h1>Employees</h1>
     <button class="primary-btn" (click)="createEmployee()">
@@ -10,11 +11,15 @@
     type="text"
     class="search-input"
     placeholder="Search employees..."
-    [(ngModel)]="search"
-    (ngModelChange)="onSearchChange()"
+    [ngModel]="search()"
+    (ngModelChange)="search.set($event); onSearchChange()"
   />
 
-  <table>
+  <div *ngIf="loading()" class="loading">
+    Loading...
+  </div>
+
+  <table *ngIf="!loading() && employees().length">
     <thead>
       <tr>
         <th>First Name</th>
@@ -28,15 +33,13 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let employee of employees">
+      <tr *ngFor="let employee of employees()">
         <td>{{ employee.firstName }}</td>
         <td>{{ employee.lastName }}</td>
         <td>{{ employee.email }}</td>
         <td>{{ employee.jobTitle }}</td>
         <td>{{ employee.salary | currency }}</td>
-        <td>
-          {{ employee.isActive ? 'Active' : 'Inactive' }}
-        </td>
+        <td>{{ employee.isActive ? 'Active' : 'Inactive' }}</td>
         <td class="actions">
           <button (click)="editEmployee(employee.employeeId)">Edit</button>
           <button class="danger" (click)="deleteEmployee(employee.employeeId)">
@@ -47,20 +50,26 @@
     </tbody>
   </table>
 
-  <div class="pagination">
-    <button (click)="previousPage()" [disabled]="pageNumber === 1">
-      Previous
+  <div *ngIf="!loading() && !employees().length" class="empty">
+    No employees found.
+  </div>
+
+  <div class="pagination" *ngIf="totalPages() > 1">
+    <button
+      (click)="previousPage()"
+      [disabled]="pageNumber() === 1">
+      « Prev
     </button>
 
     <span>
-      Page {{ pageNumber }} of {{ totalPages }}
+      Page {{ pageNumber() }} of {{ totalPages() }}
     </span>
 
     <button
       (click)="nextPage()"
-      [disabled]="pageNumber === totalPages"
-    >
-      Next
+      [disabled]="pageNumber() === totalPages()">
+      Next »
     </button>
   </div>
+
 </section>

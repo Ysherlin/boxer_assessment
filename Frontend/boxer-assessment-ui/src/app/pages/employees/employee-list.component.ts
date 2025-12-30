@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
+
+interface PagedResult<T> {
+  items: T[];
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+}
 
 @Component({
   selector: 'app-employee-list',
@@ -11,53 +18,79 @@ import { EmployeeService } from '../../services/employee.service';
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent implements OnInit {
-  employees: any[] = [];
-  search = '';
-  pageNumber = 1;
+export class EmployeeListComponent {
+  private employeeService = inject(EmployeeService);
+  private router = inject(Router);
+
+  search = signal<string>('');
+  loading = signal<boolean>(false);
+
+  pageNumber = signal<number>(1);
   pageSize = 10;
-  totalCount = 0;
-  totalPages = 0;
+
+  private resultsState = signal<PagedResult<any>>({
+    items: [],
+    totalCount: 0,
+    pageNumber: 1,
+    pageSize: 10
+  });
+
+  employees = computed(() => this.resultsState().items);
+  totalCount = computed(() => this.resultsState().totalCount);
+
+  totalPages = computed(() =>
+    Math.ceil(this.totalCount() / this.pageSize)
+  );
+
   private searchTimeout: any;
 
-  constructor(
-    private employeeService: EmployeeService,
-    private router: Router
-  ) {}
-
   ngOnInit(): void {
-    this.loadEmployees();
-  }
-
-  loadEmployees(): void {
-    this.employeeService
-      .getEmployees(this.search, this.pageNumber, this.pageSize)
-      .subscribe(result => {
-        this.employees = result.items;
-        this.totalCount = result.totalCount;
-        this.totalPages = Math.ceil(this.totalCount / this.pageSize);
-      });
+    this.loadPage(1);
   }
 
   onSearchChange(): void {
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(() => {
-      this.pageNumber = 1;
-      this.loadEmployees();
+      this.loadPage(1);
     }, 300);
   }
 
+  loadPage(page: number): void {
+    this.pageNumber.set(page);
+    this.loading.set(true);
+
+    this.employeeService
+      .getEmployees(
+        this.search(),
+        page,
+        this.pageSize
+      )
+      .subscribe({
+        next: (res) => {
+          this.resultsState.set({
+            items: res.items,
+            totalCount: res.totalCount,
+            pageNumber: page,
+            pageSize: this.pageSize
+          });
+          this.loading.set(false);
+        },
+        error: (err) => {
+          alert(err?.error?.message ?? 'Failed to load employees');
+          this.loading.set(false);
+        }
+      });
+  }
+
   nextPage(): void {
-    if (this.pageNumber < this.totalPages) {
-      this.pageNumber++;
-      this.loadEmployees();
+    if (this.pageNumber() < this.totalPages()) {
+      this.loadPage(this.pageNumber() + 1);
     }
   }
 
   previousPage(): void {
-    if (this.pageNumber > 1) {
-      this.pageNumber--;
-      this.loadEmployees();
+    if (this.pageNumber() > 1) {
+      this.loadPage(this.pageNumber() - 1);
     }
   }
 
@@ -70,9 +103,14 @@ export class EmployeeListComponent implements OnInit {
       return;
     }
 
-    this.employeeService.deleteEmployee(id).subscribe(() => {
-      alert('Employee deleted successfully.');
-      this.loadEmployees();
+    this.employeeService.deleteEmployee(id).subscribe({
+      next: () => {
+        alert('Employee deleted successfully.');
+        this.loadPage(this.pageNumber());
+      },
+      error: (err) => {
+        alert(err?.error?.message ?? 'Delete failed');
+      }
     });
   }
 
